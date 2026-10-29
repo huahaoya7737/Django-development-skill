@@ -1,0 +1,26 @@
+%% Component diagram: module boundaries and dependency direction.
+%% Nodes are Django apps, frontend packages, and external systems (PG, IdP).
+%% This diagram is the authoritative source for the directory structure;
+%% no separate architecture md file is maintained.
+%% Template for Mermaid flowchart-based component view:
+
+flowchart LR
+    FE[frontend: <React|Vue> app]
+    API[apps/<domain>.api]
+    SVC[apps/<domain>.services]
+    SEL[apps/<domain>.selectors]
+    DB[(PostgreSQL)]
+    IDP[IdP / OIDC provider]
+
+    FE -->|HTTP /api| API
+    API --> SVC
+    API --> SEL
+    SVC --> DB
+    SEL --> DB
+    API -->|auth| IDP
+
+%% Rules:
+%% - One node per app from the research architecture summary.
+%% - Edges are dependencies, labeled with the interaction kind.
+%% - Direction matters: apps may not depend on the frontend; services do not
+%%   import views; nothing imports settings from apps.

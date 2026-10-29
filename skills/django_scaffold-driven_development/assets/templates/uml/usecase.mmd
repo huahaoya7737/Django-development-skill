@@ -1,0 +1,19 @@
+%% Use case diagram: system boundary and actors.
+%% Cross-checks the spec's user stories. Boundary + actors only, no flows.
+
+flowchart LR
+    subgraph System
+        UC1((create task))
+        UC2((list tasks))
+    end
+    Member[Member]
+    Admin[Admin]
+
+    Member --> UC1
+    Member --> UC2
+    Admin --> UC2
+
+%% Rules:
+%% - Every use case maps to a user story in the spec; mismatches are reported.
+%% - Actors include IdP/external systems when they initiate interactions.
+%% - No arrows into "how" — flows live in sequence diagrams.

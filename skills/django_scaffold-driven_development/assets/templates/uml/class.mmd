@@ -1,0 +1,29 @@
+%% Class diagram: core domain classes.
+%% Attributes included ONLY when the spec names them (with types).
+%% Methods are signatures only, no bodies.
+%% One file per class becomes a stub in the base.
+
+classDiagram
+    class Task {
+        +str title
+        +str status
+        +create(title: str) Task
+        +complete() void
+    }
+    class TaskService {
+        +create_task(title: str) Task
+        +list_tasks() List~Task~
+    }
+    class TaskSerializer {
+        +data
+    }
+    Task --> TaskService : managed by
+    TaskSerializer --> Task : serializes
+
+%% Rules:
+%% - An attribute appears iff the spec names it. No created_at, no FKs,
+%%   no constraints unless the spec/class diagram has them.
+%% - Methods: name + parameter types + return type. Nothing more.
+%% - Relationships with multiplicity; names must match sequence-diagram
+%%   participants exactly.
+%% - One class = one stub file in the base (models/serializers/services).

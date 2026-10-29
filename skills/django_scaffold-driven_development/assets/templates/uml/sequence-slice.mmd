@@ -1,0 +1,22 @@
+%% Sequence diagram: one vertical slice, end to end.
+%% Scaffold creates exactly ONE (the first/thinnest slice).
+%% Participants must be concrete classes/modules from the class and
+%% component diagrams — never invented names.
+
+sequenceDiagram
+    participant FE as frontend/api client
+    participant V as apps.<domain>.api.views
+    participant S as apps.<domain>.services.TaskService
+    participant DB as PostgreSQL
+
+    FE->>V: POST /api/<resource>
+    V->>S: create_task(title)
+    S->>DB: INSERT
+    S-->>V: Task
+    V-->>FE: 201 Task
+
+%% Rules:
+%% - Each message to the system boundary (V) becomes one endpoint+view stub.
+%% - Each internal call names the service method from the class diagram.
+%% - Only the first slice during scaffold. Later slices: one diagram per
+%%   feature, added in development, each confirmed by the human first.

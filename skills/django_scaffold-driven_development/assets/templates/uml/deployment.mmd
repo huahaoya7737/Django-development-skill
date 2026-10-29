@@ -1,0 +1,27 @@
+%% Deployment diagram: runtime topology.
+%% Nodes: Django, PostgreSQL, frontend (if separated), IdP.
+%% Drives compose files and environment split (local/test/production).
+
+flowchart LR
+    subgraph client
+        BR[Browser]
+    end
+    subgraph app
+        DJ[Django + DRF]
+        FE2[frontend build / static]
+    end
+    subgraph infra
+        PG[(PostgreSQL)]
+        IDP[IdP]
+    end
+
+    BR --> FE2
+    FE2 --> DJ
+    DJ --> PG
+    BR -->|OIDC redirect| IDP
+    DJ -->|token validation| IDP
+
+%% Rules:
+%% - Reflect the specs decision: separated frontend vs Django-served.
+%% - IdP node present whenever specs say IdP auth.
+%% - Every node here appears in compose (or is marked external).

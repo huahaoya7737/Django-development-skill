@@ -1,0 +1,15 @@
+%% State diagram: lifecycle of ONE domain object.
+%% Present only when a domain object has real states + legal transitions.
+%% If no domain object qualifies, this file does not exist in the project.
+
+stateDiagram-v2
+    [*] --> open
+    open --> done : complete
+    done --> [*]
+
+%% Rules:
+%% - Maps to a STATES/TRANSITIONS constant on the model stub; no enforcement
+%%   logic in the base (that is development work).
+%% - Every transition must trace to a spec acceptance criterion or user story.
+%% - Default absent: only create this diagram when the object's lifecycle is
+%%   complex enough to need it.
